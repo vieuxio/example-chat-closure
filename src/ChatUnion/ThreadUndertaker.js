@@ -19,7 +19,7 @@ ThreadUndertaker.prototype.getThreads = function(cb) {
 
 ThreadUndertaker.prototype.getUpdates = function(cb) {
     setTimeout(function() {
-        console.log('fetching updates', db.updates);
+        //console.log('fetching updates', db.updates);
 
         var updatesCopy = JSON.parse(JSON.stringify(db.updates));
 

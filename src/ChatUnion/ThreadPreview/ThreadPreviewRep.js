@@ -18,16 +18,16 @@ function ThreadPreviewRep(thread) {
     this.thread = thread;
     this.user = thread.user;
     this.lastMessage = thread.messages.slice(-1);
-    this.active = ChatRegime.activeThread == thread;
 
-    ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_THREAD, this.onSetActiveThread, false, this);
-    ChatRegime.listen(ChatRegime.EventType.UPDATE, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_THREAD, this.dispatchEvent, false, this);
+    ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_CHAT_BOX, this.dispatchEvent, false, this);
 }
 goog.inherits(ThreadPreviewRep, Representative);
 
 
-ThreadPreviewRep.prototype.setActive = function() {
-    ChatRegime.setActive(this.thread);
+ThreadPreviewRep.prototype.getActive = function() {
+    return this.thread == ChatRegime.activeThread;
 };
 
 
@@ -37,27 +37,17 @@ ThreadPreviewRep.prototype.onUpdate = function(e) {
 
         this.lastMessage = this.thread.messages.slice(-1);
 
-        this.dispatchEvent(this.EventType.UPDATE);
+        this.dispatchEvent(this.EventType.NEW_MESSAGE);
 
         return true;
     }, this);
 };
 
 
-ThreadPreviewRep.prototype.onSetActiveThread = function() {
-    var newActive = ChatRegime.activeThread == this.thread;
-
-    if (this.active != newActive) {
-        this.active = newActive;
-
-        this.dispatchEvent(this.EventType.UPDATE_ACTIVE_THREAD);
-    }
-};
-
-
 ThreadPreviewRep.prototype.EventType = {
-    UPDATE_ACTIVE_THREAD: 'update active thread',
-    UPDATE: 'update'
+    SET_ACTIVE_THREAD: 'set active thread',
+    NEW_MESSAGE: 'new message',
+    SET_ACTIVE_CHAT_BOX: 'set active chat box'
 };
 
 

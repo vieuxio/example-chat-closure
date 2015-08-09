@@ -19,6 +19,9 @@ function ChatRegime() {
     this.threads = /* Array.<ThreadStereotype> */[];
     this.activeThread = null;
 
+    this.chatBoxes = [];
+    this.activeChatBox = null;
+
     this.getThreads_();
     this.setupUpdates_();
     this.getOwner_();
@@ -50,6 +53,7 @@ ChatRegime.prototype.onInitialData = function(err, data) {
         return new ThreadStereotype(thread);
     });
     this.activeThread = this.threads[0];
+    this.activeThread.active = true;
 
     this.dispatchEvent(this.EventType.INITIAL_DATA);
 };
@@ -72,15 +76,55 @@ ChatRegime.prototype.onUpdate = function(err, data) {
 
         correspondingThread.messages.push(data.thread.messages.slice(correspondingThread.messages.length));
 
-        correspondingThread.unread = data.thread.id != this.activeThread.id;
+        correspondingThread.unread = data.thread.id != this.activeThread.id &&
+            (this.activeChatBox ? this.activeChatBox.id != data.thread.id : true);
+
+        correspondingThread.active = data.thread.id == this.activeThread.id;
     }, this);
 
     this.dispatchEvent({
-        type: this.EventType.UPDATE,
+        type: this.EventType.NEW_MESSAGE,
         data: data
     });
 
     this.setupUpdates_();
+};
+
+
+ChatRegime.prototype.setActiveChatBox = function(thread) {
+    this.activeChatBox = thread;
+
+    if (thread)
+        this.activeChatBox.unread = false;
+
+    this.dispatchEvent(this.EventType.SET_ACTIVE_CHAT_BOX);
+};
+
+
+ChatRegime.prototype.addChatBox = function(thread) {
+    if (this.chatBoxes.indexOf(thread) == -1)
+        this.chatBoxes.push(thread);
+
+    this.setActiveChatBox(thread);
+
+    this.dispatchEvent({
+        type: this.EventType.ADD_CHAT_BOX,
+        thread: thread
+    });
+};
+
+
+ChatRegime.prototype.removeChatBox = function(thread) {
+    var i = this.chatBoxes.indexOf(thread);
+    if (i == -1) return;
+
+    this.chatBoxes.splice(i, 1, 0);
+    this.setActiveChatBox(null);
+
+    this.dispatchEvent({
+        type: this.EventType.REMOVE_CHAT_BOX,
+        thread: thread
+    });
 };
 
 
@@ -109,7 +153,10 @@ ChatRegime.prototype.getOwner_ = function() {
 ChatRegime.prototype.EventType = {
     INITIAL_DATA: 'initial data',
     SET_ACTIVE_THREAD: 'set active thread',
-    UPDATE: 'update'
+    SET_ACTIVE_CHAT_BOX: 'set active chat box',
+    NEW_MESSAGE: 'new message',
+    ADD_CHAT_BOX: 'add chat box',
+    REMOVE_CHAT_BOX: 'remove chat box'
 };
 
 exports = new ChatRegime();

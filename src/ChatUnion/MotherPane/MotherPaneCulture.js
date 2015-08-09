@@ -2,8 +2,10 @@ goog.module('vchat.MotherPaneCulture');
 
 var Culture = goog.require('vieux.Culture');
 var MotherPaneRep = goog.require('vchat.MotherPaneRep');
+var ThreadListCulture = goog.require('vchat.ThreadListCulture');
+var CultureMinistry = goog.require('vieux.CultureMinistry');
+var ChatRegime = goog.require('vchat.ChatRegime');
 var ChatPaneCulture = goog.require('vchat.ChatPaneCulture');
-var ThreadList = goog.require('vchat.ThreadListCulture');
 
 
 
@@ -14,8 +16,7 @@ var ThreadList = goog.require('vchat.ThreadListCulture');
  */
 function MotherPaneCulture() {
     this.rep = new MotherPaneRep();
-
-    this.threadList = new ThreadList();
+    this.threadList = new ThreadListCulture();
 
     MotherPaneCulture.base(this, 'constructor');
 }
@@ -26,14 +27,22 @@ goog.inherits(MotherPaneCulture, Culture);
  * @override
  */
 MotherPaneCulture.prototype.bindRepEvents = function() {
-    this.rep.listen(this.rep.EventType.INITIAL_DATA, this.onInit, false, this);
+    this.rep.listen(this.rep.EventType.UPDATE, this.onUpdate, false, this);
 };
 
 
-MotherPaneCulture.prototype.onInit = function() {
-    this.activeThread = new ChatPaneCulture(this.rep.activeThread);
+MotherPaneCulture.prototype.onUpdate = function() {
+    this.chatPane && this.chatPane.dispose();
 
-    this.activeThread.render(this.getElement());
+    this.chatPane = new ChatPaneCulture(this.rep.getActiveThread());
+    this.chatPane.render(this.getElement());
+};
+
+
+MotherPaneCulture.prototype.onClickThreadPreview = function(e) {
+    var culture = CultureMinistry.get(e.target.id);
+
+    ChatRegime.setActive(culture.getThread());
 };
 
 
@@ -51,9 +60,16 @@ MotherPaneCulture.prototype.templates_base = function() {
  * @override
  */
 MotherPaneCulture.prototype.disposeInternal = function() {
-    this.activeThread.dispose();
+    this.chatPane.dispose();
+    this.threadList.dispose();
+};
+
+
+MotherPaneCulture.prototype.events = {
+    'click': {
+        'thread-preview': MotherPaneCulture.prototype.onClickThreadPreview
+    }
 };
 
 
 exports = MotherPaneCulture;
-

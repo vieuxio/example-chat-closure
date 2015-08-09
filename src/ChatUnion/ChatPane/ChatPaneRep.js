@@ -18,21 +18,12 @@ function ChatPaneRep(thread) {
     this.user = this.thread.user;
     this.owner = ChatRegime.owner;
 
-    ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_THREAD, this.onSetActiveThread, false, this);
-    ChatRegime.listen(ChatRegime.EventType.UPDATE, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.onNewMessage, false, this);
 }
 goog.inherits(ChatPaneRep, Representative);
 
 
-ChatPaneRep.prototype.onSetActiveThread = function() {
-    this.thread = ChatRegime.activeThread;
-    this.user = this.thread.user;
-
-    this.dispatchEvent(this.EventType.CHANGE_ACTIVE_THREAD);
-};
-
-
-ChatPaneRep.prototype.onUpdate = function(e) {
+ChatPaneRep.prototype.onNewMessage = function(e) {
     e.data.some(function(data) {
         if (this.thread.id != data.thread.id) return;
         this.dispatchEvent(e);
@@ -43,8 +34,7 @@ ChatPaneRep.prototype.onUpdate = function(e) {
 
 
 ChatPaneRep.prototype.EventType = {
-    CHANGE_ACTIVE_THREAD: 'change active thread',
-    UPDATE: 'update'
+    NEW_MESSAGE: 'new message'
 };
 
 

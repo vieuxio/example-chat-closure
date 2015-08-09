@@ -3,7 +3,6 @@ goog.module('vchat.ThreadListCulture');
 var Culture = goog.require('vieux.Culture');
 var ThreadListRep = goog.require('vchat.ThreadListRep');
 var ThreadPreviewCulture = goog.require('vchat.ThreadPreviewCulture');
-var ChatPaneCulture = goog.require('vchat.ChatPaneCulture');
 
 
 
@@ -25,13 +24,13 @@ goog.inherits(ThreadListCulture, Culture);
  */
 ThreadListCulture.prototype.bindRepEvents = function() {
     this.rep.listen(this.rep.EventType.INITIAL_DATA, this.onInit, false, this);
-    this.rep.listen(this.rep.EventType.UPDATE, this.onUpdate, false, this);
+    this.rep.listen(this.rep.EventType.NEW_MESSAGE, this.onNewMessage, false, this);
 };
 
 
 ThreadListCulture.prototype.onInit = function(e) {
     this.threadPreviewsById = {};
-    this.threadPreviews = this.rep.threads.map(function(thread) {
+    this.threadPreviews = this.rep.getThreads().map(function(thread) {
         var culture = new ThreadPreviewCulture(thread);
         this.threadPreviewsById[thread.id] = culture;
 
@@ -44,7 +43,7 @@ ThreadListCulture.prototype.onInit = function(e) {
 };
 
 
-ThreadListCulture.prototype.onUpdate = function(e) {
+ThreadListCulture.prototype.onNewMessage = function(e) {
     var list = this.getElement();
 
     e.data.forEach(function(data) {

@@ -13,37 +13,25 @@ var ChatRegime = goog.require('vchat.ChatRegime');
 function MotherPaneRep() {
     MotherPaneRep.base(this, 'constructor');
 
-    ChatRegime.listen(ChatRegime.EventType.INITIAL_DATA, this.onInitialData, false, this);
+    ChatRegime.listen(ChatRegime.EventType.INITIAL_DATA, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_THREAD, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.onUpdate, false, this);
 }
 goog.inherits(MotherPaneRep, Representative);
 
 
-/**
- * Fires on initial fetch.
- */
-MotherPaneRep.prototype.onInitialData = function() {
-    this.activeThread = ChatRegime.activeThread;
-    this.threads = ChatRegime.threads;
-
-    this.threads.some(function(thread) {
-        if (thread.user.username == this.activeThread.user.username) {
-            thread.active = true;
-        }
-    }.bind(this));
-
-    this.dispatchEvent(this.EventType.INITIAL_DATA);
-    ChatRegime.listen(ChatRegime.EventType.UPDATE, this.onUpdate, false, this);
+MotherPaneRep.prototype.getThreads = function() {
+    return ChatRegime.threads;
 };
 
 
-MotherPaneRep.prototype.onUpdate = function(e) {
-    e.data.some(function(data) {
-        if (data.thread.user.username == this.activeThread.user.username) {
-            this.activeThread.active = true;
-        }
-    }.bind(this));
+MotherPaneRep.prototype.getActiveThread = function() {
+    return ChatRegime.activeThread;
+};
 
-    this.dispatchEvent(e);
+
+MotherPaneRep.prototype.onUpdate = function() {
+    this.dispatchEvent(this.EventType.UPDATE);
 };
 
 
@@ -52,7 +40,8 @@ MotherPaneRep.prototype.onUpdate = function(e) {
  */
 MotherPaneRep.prototype.EventType = {
     INITIAL_DATA: 'initial data',
-    UPDATE: 'update'
+    UPDATE: 'update',
+    SET_ACTIVE_THREAD: 'set active thread'
 };
 
 

@@ -14,8 +14,9 @@ function MenuRep() {
     MenuRep.base(this, 'constructor');
     this.unreadCount = ChatRegime.getUnreadCount();
 
-    ChatRegime.listen(ChatRegime.EventType.UPDATE, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.onUpdate, false, this);
     ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_THREAD, this.onUpdate, false, this);
+    ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_CHAT_BOX, this.onUpdate, false, this);
 }
 goog.inherits(MenuRep, Representative);
 

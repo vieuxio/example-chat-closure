@@ -25,6 +25,14 @@ ThreadsPopoverRep.prototype.toggle = function() {
 
 
 /**
+ * @param {ThreadStereotype} thread Thread to open a chat box for.
+ */
+ThreadsPopoverRep.prototype.addChatBox = function(thread) {
+    ChatRegime.addChatBox(thread);
+};
+
+
+/**
  * @enum {string}
  */
 ThreadsPopoverRep.prototype.EventType = {

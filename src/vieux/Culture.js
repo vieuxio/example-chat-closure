@@ -124,6 +124,7 @@ Culture.prototype.templates_base = function() {
  */
 Culture.prototype.disposeInternal = function() {
     Ministry.remove(this);
+    this.element && this.element.parentNode.removeChild(this.element);
     this.element = null;
     this.id = null;
 };

@@ -14,6 +14,7 @@ function ThreadListRep() {
     ThreadListRep.base(this, 'constructor');
 
     ChatRegime.listen(ChatRegime.EventType.INITIAL_DATA, this.onInitialData, false, this);
+    ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.dispatchEvent, false, this);
 }
 goog.inherits(ThreadListRep, Representative);
 
@@ -22,15 +23,12 @@ goog.inherits(ThreadListRep, Representative);
  * Fires on initial fetch.
  */
 ThreadListRep.prototype.onInitialData = function() {
-    this.threads = ChatRegime.threads;
-
     this.dispatchEvent(this.EventType.INITIAL_DATA);
-    ChatRegime.listen(ChatRegime.EventType.UPDATE, this.onUpdate, false, this);
 };
 
 
-ThreadListRep.prototype.onUpdate = function(e) {
-    this.dispatchEvent(e);
+ThreadListRep.prototype.getThreads = function() {
+    return ChatRegime.threads;
 };
 
 
@@ -39,7 +37,7 @@ ThreadListRep.prototype.onUpdate = function(e) {
  */
 ThreadListRep.prototype.EventType = {
     INITIAL_DATA: 'initial data',
-    UPDATE: 'update'
+    NEW_MESSAGE: 'new message'
 };
 
 

@@ -29,7 +29,7 @@ body {
 	font-weight: 300;
 }
 
-button {
+input, button {
     border: none;
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

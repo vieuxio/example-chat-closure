@@ -148,6 +148,17 @@ CultureMinistry.prototype.matchesSelector = function(el, selector) {
 
 
 /**
+ * Returns the Culture instance for a given id.
+ *
+ * @param {string} id Id of the Culture to return.
+ * @return {vieux.Culture}
+ */
+CultureMinistry.prototype.get = function(id) {
+    return this.cults[id];
+};
+
+
+/**
  * Set given component.
  * @param {vieux.Culture} cult Component which will be set to cults.
  */

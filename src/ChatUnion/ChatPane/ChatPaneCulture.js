@@ -23,16 +23,33 @@ goog.inherits(ChatPaneCulture, Culture);
  * @override
  */
 ChatPaneCulture.prototype.bindRepEvents = function() {
-    this.rep.listen(this.rep.EventType.CHANGE_ACTIVE_THREAD, this.changeActiveThread, false, this);
-    this.rep.listen(this.rep.EventType.UPDATE, this.changeActiveThread, false, this);
+    this.rep.listen(this.rep.EventType.NEW_MESSAGE, this.onNewMessage, false, this);
 };
 
 
-ChatPaneCulture.prototype.changeActiveThread = function() {
-    this.getElement().innerHTML = this.templates_inner();
+ChatPaneCulture.prototype.onNewMessage = function() {
+    this.$('messages').innerHTML = this.templates_messages();
 
+    this.resetScroll_();
+};
+
+
+/**
+ * @private
+ */
+ChatPaneCulture.prototype.resetScroll_ = function() {
     var messages = this.$('messages');
+    var thread = this.$('thread');
+
     messages.scrollTop = messages.scrollHeight;
+    thread.scrollTop = thread.scrollHeight;
+};
+
+
+ChatPaneCulture.prototype.render = function(opt_base, opt_index) {
+    ChatPaneCulture.base(this, 'render', opt_base, opt_index);
+
+    this.resetScroll_();
 };
 
 
@@ -49,15 +66,17 @@ ChatPaneCulture.prototype.templates_base = function() {
 ChatPaneCulture.prototype.templates_inner = function() {
     var user = this.rep.thread.user;
 
-    return '<img src="' + user.picture.thumbnail + '"/>' +
-        '<username><strong>' + user.getFullName() + '</strong></username>' +
-        '<messages>' +
-        this.templates_messages() +
-        '</messages>' +
+    return '<thread>' +
+            '<img src="' + user.picture.thumbnail + '"/>' +
+            '<username><strong>' + user.getFullName() + '</strong></username>' +
+            '<messages>' +
+            this.templates_messages() +
+            '</messages>' +
+        '</thread>' +
         '<entry>' +
             '<img src="' + this.rep.owner.picture.thumbnail + '"/>' +
-            '<reply>This demo is for demonstrating unread threads synchronisation, so we left message typing out ' +
-                'for the sake of brevity.</reply>' +
+            '<input type="text" placeholder="This demo is for demonstrating unread threads synchronisation, ' +
+                'so we left message typing out for the sake of brevity."/>' +
         '</entry>';
 };
 
@@ -73,6 +92,15 @@ ChatPaneCulture.prototype.templates_messages = function() {
  */
 ChatPaneCulture.prototype.templates_message = function(message) {
     return '<message>' + message + '</message>';
+};
+
+
+/**
+ * @override
+ */
+ChatPaneCulture.prototype.disposeInternal = function() {
+    ChatPaneCulture.base(this, 'disposeInternal');
+    this.rep.unlisten(this.rep.EventType.NEW_MESSAGE, this.onNewMessage, false, this);
 };
 
 exports = ChatPaneCulture;

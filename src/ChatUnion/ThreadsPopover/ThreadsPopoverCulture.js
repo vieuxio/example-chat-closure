@@ -3,7 +3,8 @@ goog.module('vchat.ThreadsPopoverCulture');
 var classlist = goog.require('goog.dom.classlist');
 var Culture = goog.require('vieux.Culture');
 var ThreadsPopoverRep = goog.require('vchat.ThreadsPopoverRep');
-var ThreadList = goog.require('vchat.ThreadListCulture');
+var ThreadListCulture = goog.require('vchat.ThreadListCulture');
+var CultureMinistry = goog.require('vieux.CultureMinistry');
 
 
 
@@ -15,7 +16,7 @@ function ThreadsPopoverCulture() {
     this.rep = new ThreadsPopoverRep();
 
     // the following line should have worked better, but compiler fucks up renaming things, so.
-    //this.threadList = new ThreadList();
+    //this.threadList = new ThreadListCulture();
 
     ThreadsPopoverCulture.base(this, 'constructor');
 }
@@ -28,16 +29,33 @@ ThreadsPopoverCulture.prototype.toggle = function() {
 };
 
 
+ThreadsPopoverCulture.prototype.onClickThreadPreview = function(e) {
+    var culture = CultureMinistry.get(e.target.id);
+
+    this.rep.addChatBox(culture.getThread());
+
+    return false;
+};
+
+
 /**
  * @override
  */
 ThreadsPopoverCulture.prototype.templates_base = function() {
     var visible = this.rep.visible ? 'visible' : '';
-    var threadList = new ThreadList(); // normally this shouldn't be here but the constructor, but compiler fucks up.
+    var threadList = new ThreadListCulture(); // normally this shouldn't be here but the constructor,
+                                              // but compiler fucks up.
 
     return '<threads-popover id="' + this.getId() + '" class="' + visible + '">' +
-        threadList.getPlaceholder() +
+            threadList.getPlaceholder() +
         '</threads-popover>';
+};
+
+
+ThreadsPopoverCulture.prototype.events = {
+    'click': {
+        'thread-preview': ThreadsPopoverCulture.prototype.onClickThreadPreview
+    }
 };
 
 

@@ -3,11 +3,8 @@ chat-pane {
     position: absolute;
     height: 100%;
     top: 0;
-    padding: 10px;
-    overflow: scroll;
-    width: calc(100% - 280px);
-    left: 280px;
-    border-left: 1px solid #ccc;
+    width: 100%;
+    left: 0;
 }
 
 chat-pane img {
@@ -15,6 +12,13 @@ chat-pane img {
     height: 40px;
     width: 40px;
     position: absolute;
+}
+
+chat-pane thread {
+    display: block;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
 }
 
 chat-pane messages {
@@ -49,14 +53,14 @@ chat-pane entry {
     border-top: 1px solid #ddd;
 }
 
-chat-pane reply {
+chat-pane input {
     display: block;
     margin: 10px;
     border: 1px solid #aaa;
     padding: 10px;
     background: #fff;
     margin-left: 60px;
-    right: 0;
+    width: calc(100% - 70px);
     height: 60px;
     overflow: auto;
 }
