@@ -62,6 +62,8 @@ MotherPaneCulture.prototype.templates_base = function() {
 MotherPaneCulture.prototype.disposeInternal = function() {
     this.chatPane.dispose();
     this.threadList.dispose();
+
+    MotherPaneCulture.base(this, 'disposeInternal');
 };
 
 

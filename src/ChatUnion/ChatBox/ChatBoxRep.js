@@ -30,6 +30,11 @@ ChatBoxRep.prototype.setActive = function() {
 };
 
 
+ChatBoxRep.prototype.close = function() {
+    ChatRegime.removeChatBox(this.thread);
+};
+
+
 ChatBoxRep.prototype.getActive = function() {
     return this.thread == ChatRegime.activeChatBox;
 };
@@ -37,6 +42,17 @@ ChatBoxRep.prototype.getActive = function() {
 
 ChatBoxRep.prototype.onUpdate = function() {
     this.dispatchEvent(this.EventType.UPDATE);
+};
+
+
+/**
+ * @override
+ */
+ChatBoxRep.prototype.disposeInternal = function() {
+    ChatRegime.unlisten(ChatRegime.EventType.NEW_MESSAGE, this.onUpdate, false, this);
+    ChatRegime.unlisten(ChatRegime.EventType.SET_ACTIVE_CHAT_BOX, this.onUpdate, false, this);
+
+    ChatBoxRep.base(this, 'disposeInternal');
 };
 
 

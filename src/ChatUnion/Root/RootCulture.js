@@ -26,6 +26,7 @@ goog.inherits(RootCulture, Culture);
 
 RootCulture.prototype.bindRepEvents = function() {
     this.rep.listen(this.rep.EventType.ADD_CHAT_BOX, this.onAddChatBox, false, this);
+    this.rep.listen(this.rep.EventType.REMOVE_CHAT_BOX, this.onRemoveChatBox, false, this);
 };
 
 
@@ -40,6 +41,18 @@ RootCulture.prototype.onAddChatBox = function(e) {
     this.chatBoxes.push(chatBox);
 
     chatBox.render(this.$('chat-boxes'));
+};
+
+
+RootCulture.prototype.onRemoveChatBox = function(e) {
+    var existingChatBox = this.chatBoxes.filter(function(chatBox) {
+        return chatBox.getThread().id == e.thread.id;
+    })[0];
+
+    if (existingChatBox) {
+        goog.array.remove(this.chatBoxes, existingChatBox);
+        existingChatBox.dispose();
+    }
 };
 
 
@@ -96,6 +109,8 @@ RootCulture.prototype.disposeInternal = function() {
     this.chatBoxes.forEach(function(chatBox) {
         chatBox.dispose();
     });
+
+    RootCulture.base(this, 'disposeInternal');
 };
 
 

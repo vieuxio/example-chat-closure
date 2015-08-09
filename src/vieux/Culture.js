@@ -127,6 +127,8 @@ Culture.prototype.disposeInternal = function() {
     this.element && this.element.parentNode.removeChild(this.element);
     this.element = null;
     this.id = null;
+
+    Culture.base(this, 'disposeInternal');
 };
 
 

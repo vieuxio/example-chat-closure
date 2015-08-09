@@ -12,6 +12,7 @@ function RootRep() {
     RootRep.base(this, 'constructor');
 
     ChatRegime.listen(ChatRegime.EventType.ADD_CHAT_BOX, this.dispatchEvent, false, this);
+    ChatRegime.listen(ChatRegime.EventType.REMOVE_CHAT_BOX, this.dispatchEvent, false, this);
 }
 goog.inherits(RootRep, Representative);
 

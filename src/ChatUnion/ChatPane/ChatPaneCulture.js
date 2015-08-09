@@ -99,8 +99,8 @@ ChatPaneCulture.prototype.templates_message = function(message) {
  * @override
  */
 ChatPaneCulture.prototype.disposeInternal = function() {
+    this.rep.dispose();
     ChatPaneCulture.base(this, 'disposeInternal');
-    this.rep.unlisten(this.rep.EventType.NEW_MESSAGE, this.onNewMessage, false, this);
 };
 
 exports = ChatPaneCulture;

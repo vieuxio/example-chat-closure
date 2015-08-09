@@ -69,6 +69,8 @@ ThreadListCulture.prototype.disposeInternal = function() {
     this.threadPreviews.forEach(function(threadPreview) {
         threadPreview.dispose();
     });
+
+    ThreadListCulture.base(this, 'disposeInternal');
 };
 
 

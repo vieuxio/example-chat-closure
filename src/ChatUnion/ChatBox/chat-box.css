@@ -15,7 +15,7 @@ chat-box:first-child {
 chat-box header {
     background: #6b90da;
     color: white;
-    padding: 0 10px;
+    padding: 0 10px 0 30px;
     height: 30px;
     line-height: 30px;
 }
@@ -29,6 +29,15 @@ chat-box.unread header {
     background-color: #6b90da;
     color: white;
     -webkit-animation: unread-pulsate 3s infinite linear;
+}
+
+chat-box img {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
 
 chat-box content {
@@ -79,4 +88,9 @@ chat-box chat-pane input {
 
 chat-box.minimized content {
     display: none;
+}
+
+chat-box close {
+    float: right;
+    cursor: pointer;
 }

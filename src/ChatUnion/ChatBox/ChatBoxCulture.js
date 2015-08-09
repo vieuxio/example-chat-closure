@@ -6,7 +6,6 @@ var ChatPane = goog.require('vchat.ChatPaneCulture');
 var ThreadStereotype = goog.require('vchat.ThreadStereotype');
 
 
-
 /**
  *
  * @constructor
@@ -46,6 +45,11 @@ ChatBoxCulture.prototype.focus = function() {
 };
 
 
+ChatBoxCulture.prototype.close = function() {
+    this.rep.close();
+};
+
+
 ChatBoxCulture.prototype.render = function(opt_base, opt_index) {
     ChatBoxCulture.base(this, 'render', opt_base, opt_index);
 
@@ -59,17 +63,35 @@ ChatBoxCulture.prototype.render = function(opt_base, opt_index) {
  */
 ChatBoxCulture.prototype.templates_base = function() {
     return '<chat-box id="' + this.getId() + '">' +
-            '<header>' + this.rep.user.getFullName() + '</header>' +
+            '<header>' +
+                '<img src="' + this.rep.user.picture.thumbnail + '"/>' +
+                '<strong>' +
+                    this.rep.user.getFullName() +
+                '</strong>' +
+                '<close>✖</close>' +
+            '</header>' +
             '<content></content>' +
         '</chat-box>';
 };
 
 
+/**
+ * @override
+ */
+ChatBoxCulture.prototype.disposeInternal = function() {
+    this.rep.dispose();
+
+    ChatBoxCulture.base(this, 'disposeInternal');
+};
+
+
 ChatBoxCulture.prototype.events = {
     'click': {
-        'chat-box': ChatBoxCulture.prototype.focus
+        'chat-box': ChatBoxCulture.prototype.focus,
+        'close': ChatBoxCulture.prototype.close
     }
 };
+
 
 exports = ChatBoxCulture;
 
