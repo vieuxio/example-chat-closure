@@ -39,6 +39,8 @@ ChatBoxCulture.prototype.getThread = function() {
 
 
 ChatBoxCulture.prototype.focus = function() {
+    if (this.rep.minimized) this.toggle();
+
     this.$('input').focus();
     this.rep.setActive();
     this.onUpdate();
@@ -47,6 +49,15 @@ ChatBoxCulture.prototype.focus = function() {
 
 ChatBoxCulture.prototype.close = function() {
     this.rep.close();
+};
+
+
+ChatBoxCulture.prototype.toggle = function() {
+    this.rep.minimize();
+
+    goog.dom.classlist.toggle(this.getElement(), 'minimized');
+
+    return false;
 };
 
 
@@ -69,6 +80,7 @@ ChatBoxCulture.prototype.templates_base = function() {
                     this.rep.user.getFullName() +
                 '</strong>' +
                 '<close>✖</close>' +
+                '<minimize></minimize>' +
             '</header>' +
             '<content></content>' +
         '</chat-box>';
@@ -88,7 +100,8 @@ ChatBoxCulture.prototype.disposeInternal = function() {
 ChatBoxCulture.prototype.events = {
     'click': {
         'chat-box': ChatBoxCulture.prototype.focus,
-        'close': ChatBoxCulture.prototype.close
+        'close': ChatBoxCulture.prototype.close,
+        'minimize': ChatBoxCulture.prototype.toggle
     }
 };
 

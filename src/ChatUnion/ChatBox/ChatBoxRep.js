@@ -18,6 +18,7 @@ function ChatBoxRep(thread) {
 
     this.thread = thread;
     this.user = this.thread.user;
+    this.minimized = false;
 
     ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.onUpdate, false, this);
     ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_CHAT_BOX, this.onUpdate, false, this);
@@ -32,6 +33,13 @@ ChatBoxRep.prototype.setActive = function() {
 
 ChatBoxRep.prototype.close = function() {
     ChatRegime.removeChatBox(this.thread);
+};
+
+
+ChatBoxRep.prototype.minimize = function() {
+    this.minimized = !this.minimized;
+
+    ChatRegime.setActiveChatBox(this.minimized ? null : this.thread);
 };
 
 

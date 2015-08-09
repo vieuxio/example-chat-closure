@@ -9,6 +9,8 @@ chat-boxes {
     bottom: 0;
     right: 0;
     max-width: 100%;
-    display: block;
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    align-items: flex-end;
     z-index: 1;
 }
