@@ -13,6 +13,7 @@ var ThreadPreviewCulture = goog.require('vchat.ThreadPreviewCulture');
  */
 function ThreadListCulture() {
     this.rep = new ThreadListRep();
+    this.threadPreviewsById = {};
 
     ThreadListCulture.base(this, 'constructor');
 }
@@ -48,6 +49,7 @@ ThreadListCulture.prototype.onNewMessage = function(e) {
 
     e.data.forEach(function(data) {
         var correspondingThreadPreview = this.threadPreviewsById[data.thread.id];
+        if (!correspondingThreadPreview) return;
 
         list.insertBefore(correspondingThreadPreview.getElement(), list.children[0]);
     }, this);
