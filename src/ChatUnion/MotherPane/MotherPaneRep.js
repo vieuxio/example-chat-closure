@@ -15,7 +15,6 @@ function MotherPaneRep() {
 
     ChatRegime.listen(ChatRegime.EventType.INITIAL_DATA, this.onUpdate, false, this);
     ChatRegime.listen(ChatRegime.EventType.SET_ACTIVE_THREAD, this.onUpdate, false, this);
-    ChatRegime.listen(ChatRegime.EventType.NEW_MESSAGE, this.onUpdate, false, this);
 }
 goog.inherits(MotherPaneRep, Representative);
 
@@ -39,9 +38,7 @@ MotherPaneRep.prototype.onUpdate = function() {
  * @enum {string}
  */
 MotherPaneRep.prototype.EventType = {
-    INITIAL_DATA: 'initial data',
-    UPDATE: 'update',
-    SET_ACTIVE_THREAD: 'set active thread'
+    UPDATE: 'update'
 };
 
 
