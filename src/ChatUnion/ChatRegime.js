@@ -92,6 +92,8 @@ ChatRegime.prototype.onUpdate = function(err, data) {
 
 
 ChatRegime.prototype.setActiveChatBox = function(thread) {
+    if (this.activeChatBox == thread) return;
+
     this.activeChatBox = thread;
 
     if (thread)
@@ -136,6 +138,8 @@ ChatRegime.prototype.getUnreadCount = function() {
 
 
 ChatRegime.prototype.setActive = function(thread) {
+    if (this.activeThread == thread) return;
+
     this.activeThread = thread;
     this.activeThread.unread = false;
 
