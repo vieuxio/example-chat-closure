@@ -47,6 +47,10 @@ chat-box img {
     left: 5px;
 }
 
+chat-box entry img {
+    display: none;
+}
+
 chat-box content {
     height: 300px;
     display: block;
