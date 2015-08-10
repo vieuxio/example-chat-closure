@@ -102,7 +102,10 @@ ChatBoxCulture.prototype.templates_base = function() {
  */
 ChatBoxCulture.prototype.disposeInternal = function() {
     this['chatPane'].dispose();
+    this['chatPane'] = null;
+
     this.rep.dispose();
+    this.rep = null;
 
     ChatBoxCulture.base(this, 'disposeInternal');
 };
