@@ -6,6 +6,7 @@ var ChatPaneCulture = goog.require('vchat.ChatPaneCulture');
 var ThreadStereotype = goog.require('vchat.ThreadStereotype');
 
 
+
 /**
  *
  * @constructor
@@ -43,10 +44,12 @@ ChatBoxCulture.prototype.getThread = function() {
 };
 
 
-ChatBoxCulture.prototype.focus = function() {
+ChatBoxCulture.prototype.focus = function(e) {
     if (this.rep.minimized) this.toggle();
 
-    this.$('input').focus();
+    if (!this.rep.getActive())
+        this.$('input').focus();
+
     this.rep.setActive();
     this.onUpdate();
 };
