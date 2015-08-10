@@ -56,6 +56,7 @@ ChatPaneCulture.prototype.render = function(opt_base, opt_index) {
     ChatPaneCulture.base(this, 'render', opt_base, opt_index);
 
     this.resetScroll_();
+    this.$('input').focus();
 };
 
 

@@ -76,7 +76,6 @@ ChatBoxCulture.prototype.render = function(opt_base, opt_index) {
     ChatBoxCulture.base(this, 'render', opt_base, opt_index);
 
     this['chatPane'].render(this.$('content'));
-    this.$('input').focus();
 };
 
 
