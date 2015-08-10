@@ -29,7 +29,7 @@ ThreadListCulture.prototype.bindRepEvents = function() {
 };
 
 
-ThreadListCulture.prototype.onInit = function(e) {
+ThreadListCulture.prototype.onInit = function() {
     this.threadPreviewsById = {};
     this.threadPreviews = this.rep.getThreads().map(function(thread) {
         var culture = new ThreadPreviewCulture(thread);
