@@ -21,29 +21,31 @@ function ThreadPreviewCulture(thread) {
 goog.inherits(ThreadPreviewCulture, Culture);
 
 
+ThreadPreviewCulture.prototype.setActiveThread = function() {
+    goog.dom.classlist.enable(this.getElement(), 'active', this.rep.getActive());
+    this.setUnread();
+};
+
+
+ThreadPreviewCulture.prototype.update = function() {
+    this.setActiveThread();
+
+    this.$('last-message').innerText = this.rep.lastMessage;
+};
+
+
+ThreadPreviewCulture.prototype.setUnread = function() {
+    goog.dom.classlist.enable(this.getElement(), 'unread', this.rep.thread.unread);
+};
+
+
 /**
  * @override
  */
 ThreadPreviewCulture.prototype.bindRepEvents = function() {
-    function setActiveThread() { // normally this would be a method on the prototype but somehow closure compiler
-                                     // fucks up.
-        goog.dom.classlist.enable(this.getElement(), 'active', this.rep.getActive());
-        setUnread.call(this);
-    }
-
-    function update() {
-        setActiveThread.call(this);
-
-        this.$('last-message').innerText = this.rep.lastMessage;
-    }
-
-    function setUnread() {
-        goog.dom.classlist.enable(this.getElement(), 'unread', this.rep.thread.unread);
-    }
-
-    this.rep.listen(this.rep.EventType.SET_ACTIVE_THREAD, setActiveThread, false, this);
-    this.rep.listen(this.rep.EventType.NEW_MESSAGE, update, false, this);
-    this.rep.listen(this.rep.EventType.SET_ACTIVE_CHAT_BOX, setUnread, false, this);
+    this.rep.listen(this.rep.EventType.SET_ACTIVE_THREAD, this.setActiveThread, false, this);
+    this.rep.listen(this.rep.EventType.NEW_MESSAGE, this.update, false, this);
+    this.rep.listen(this.rep.EventType.SET_ACTIVE_CHAT_BOX, this.setUnread, false, this);
 };
 
 

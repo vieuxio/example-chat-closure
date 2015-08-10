@@ -33,6 +33,16 @@ ChatPaneRep.prototype.onNewMessage = function(e) {
 };
 
 
+/**
+ * @override
+ */
+ChatPaneRep.prototype.disposeInternal = function() {
+    ChatRegime.unlisten(ChatRegime.EventType.NEW_MESSAGE, this.onNewMessage, false, this);
+
+    ChatPaneRep.base(this, 'disposeInternal');
+};
+
+
 ChatPaneRep.prototype.EventType = {
     NEW_MESSAGE: 'new message'
 };

@@ -15,8 +15,7 @@ var CultureMinistry = goog.require('vieux.CultureMinistry');
 function ThreadsPopoverCulture() {
     this.rep = new ThreadsPopoverRep();
 
-    // the following line should have worked better, but compiler fucks up renaming things, so.
-    //this.threadList = new ThreadListCulture();
+    this.threadList = new ThreadListCulture();
 
     ThreadsPopoverCulture.base(this, 'constructor');
 }
@@ -43,11 +42,9 @@ ThreadsPopoverCulture.prototype.onClickThreadPreview = function(e) {
  */
 ThreadsPopoverCulture.prototype.templates_base = function() {
     var visible = this.rep.visible ? 'visible' : '';
-    var threadList = new ThreadListCulture(); // normally this shouldn't be here but the constructor,
-                                              // but compiler fucks up.
 
     return '<threads-popover id="' + this.getId() + '" class="' + visible + '">' +
-            threadList.getPlaceholder() +
+            this.threadList.getPlaceholder() +
         '</threads-popover>';
 };
 

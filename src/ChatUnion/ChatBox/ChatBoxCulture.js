@@ -2,7 +2,7 @@ goog.module('vchat.ChatBoxCulture');
 
 var ChatBoxRep = goog.require('vchat.ChatBoxRep');
 var Culture = goog.require('vieux.Culture');
-var ChatPane = goog.require('vchat.ChatPaneCulture');
+var ChatPaneCulture = goog.require('vchat.ChatPaneCulture');
 var ThreadStereotype = goog.require('vchat.ThreadStereotype');
 
 
@@ -17,11 +17,16 @@ function ChatBoxCulture(thread) {
     this.rep = new ChatBoxRep(thread);
     ChatBoxCulture.base(this, 'constructor');
 
-    this.chatPane = new ChatPane(thread);
+    // unfortunately, this "escaping" hack is necessary for the compiled version to function. otherwise we would just
+    // write `this.chatPane`...
+    this['chatPane'] = new ChatPaneCulture(thread);
 }
 goog.inherits(ChatBoxCulture, Culture);
 
 
+/**
+ * @override
+ */
 ChatBoxCulture.prototype.bindRepEvents = function() {
     this.rep.listen(this.rep.EventType.UPDATE, this.onUpdate, false, this);
 };
@@ -61,10 +66,16 @@ ChatBoxCulture.prototype.toggle = function() {
 };
 
 
+/**
+ * @override
+ *
+ * @param {Element=} opt_base Optional element to render this item into.
+ * @param {number=} opt_index Place to render element in base element's children list.
+ */
 ChatBoxCulture.prototype.render = function(opt_base, opt_index) {
     ChatBoxCulture.base(this, 'render', opt_base, opt_index);
 
-    this.chatPane.render(this.$('content'));
+    this['chatPane'].render(this.$('content'));
     this.$('input').focus();
 };
 
@@ -91,6 +102,7 @@ ChatBoxCulture.prototype.templates_base = function() {
  * @override
  */
 ChatBoxCulture.prototype.disposeInternal = function() {
+    this['chatPane'].dispose();
     this.rep.dispose();
 
     ChatBoxCulture.base(this, 'disposeInternal');

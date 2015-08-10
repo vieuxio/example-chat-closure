@@ -24,6 +24,9 @@ function RootCulture() {
 goog.inherits(RootCulture, Culture);
 
 
+/**
+ * @override
+ */
 RootCulture.prototype.bindRepEvents = function() {
     this.rep.listen(this.rep.EventType.ADD_CHAT_BOX, this.onAddChatBox, false, this);
     this.rep.listen(this.rep.EventType.REMOVE_CHAT_BOX, this.onRemoveChatBox, false, this);

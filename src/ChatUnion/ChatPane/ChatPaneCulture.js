@@ -46,6 +46,12 @@ ChatPaneCulture.prototype.resetScroll_ = function() {
 };
 
 
+/**
+ * @override
+ *
+ * @param {Element=} opt_base Optional element to render this item into.
+ * @param {number=} opt_index Place to render element in base element's children list.
+ */
 ChatPaneCulture.prototype.render = function(opt_base, opt_index) {
     ChatPaneCulture.base(this, 'render', opt_base, opt_index);
 

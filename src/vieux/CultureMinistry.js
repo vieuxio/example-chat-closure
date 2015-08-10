@@ -1,5 +1,7 @@
 goog.module('vieux.CultureMinistry');
 
+var EventType = goog.require('goog.events.EventType');
+var events = goog.require('goog.events');
 
 
 /**
@@ -10,7 +12,7 @@ function CultureMinistry() {
     /** @type {Object.<string, vieux.Culture>} */
     this.cults = {};
 
-    goog.events.listen(document.body, CultureMinistry.eventTypes, this);
+    events.listen(document.body, CultureMinistry.eventTypes, this);
 }
 
 
@@ -48,23 +50,23 @@ CultureMinistry.prototype.getParentCults = function(child) {
 
 /**
  * Keeps event types.
- * @type {Array.<goog.events.EventType>}
+ * @type {Array.<EventType>}
  */
 CultureMinistry.eventTypes = [
-    goog.events.EventType.CLICK,
-    goog.events.EventType.MOUSEOVER,
-    goog.events.EventType.MOUSEOUT,
-    goog.events.EventType.MOUSEMOVE,
-    goog.events.EventType.MOUSEDOWN,
-    goog.events.EventType.MOUSEUP,
-    goog.events.EventType.SCROLL,
-    goog.events.EventType.KEYUP,
-    goog.events.EventType.KEYPRESS,
-    goog.events.EventType.FOCUSIN,
-    goog.events.EventType.FOCUSOUT,
-    goog.events.EventType.TOUCHSTART,
-    goog.events.EventType.TOUCHMOVE,
-    goog.events.EventType.TOUCHEND
+    EventType.CLICK,
+    EventType.MOUSEOVER,
+    EventType.MOUSEOUT,
+    EventType.MOUSEMOVE,
+    EventType.MOUSEDOWN,
+    EventType.MOUSEUP,
+    EventType.SCROLL,
+    EventType.KEYUP,
+    EventType.KEYPRESS,
+    EventType.FOCUSIN,
+    EventType.FOCUSOUT,
+    EventType.TOUCHSTART,
+    EventType.TOUCHMOVE,
+    EventType.TOUCHEND
 ];
 
 
