@@ -7,7 +7,7 @@ This project implements an example chat application with Vieux architecture. It 
 ## Install
 
 ```
-$ git clone --recursive git@github.com:vieuxjs/example-chat-closure.git
+$ git clone --recursive git@github.com:vieuxio/example-chat-closure.git
 $ cd example-chat-closure
 $ npm install
 ```
