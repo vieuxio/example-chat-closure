@@ -22,11 +22,15 @@ function ChatRegime() {
     this.chatBoxes = [];
     this.activeChatBox = null;
 
-    this.getThreads_();
-    this.setupUpdates_();
-    this.getOwner_();
+    this.owner = null;
 }
 goog.inherits(ChatRegime, EventTarget);
+
+
+ChatRegime.prototype.init = function() {
+    this.getThreads_();
+    this.getOwner_();
+};
 
 
 /**
@@ -56,6 +60,8 @@ ChatRegime.prototype.onInitialData = function(err, data) {
     this.activeThread.active = true;
 
     this.dispatchEvent(this.EventType.INITIAL_DATA);
+
+    this.setupUpdates_();
 };
 
 
