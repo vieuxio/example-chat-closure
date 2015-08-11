@@ -24,7 +24,7 @@ $ gulp
 
 ## Development
 
-This project provides a development web server that listens on port 8000.
+This project provides a development web server that listens on port 1971.
 
 Run the default task via `gulp` and the project will be ready for development and inspection. Source files are symlinked, and the server watches for file changes with live reloading, so any change you make to the files under `src` folder will cause an automatic reload.
 
