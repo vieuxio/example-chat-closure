@@ -75,14 +75,14 @@ ChatRegime.prototype.getThreadById = function(id) {
 ChatRegime.prototype.onUpdate = function(err, data) {
     if (err || !data.length) return this.setupUpdates_();
 
-    data.forEach(function(data) {
+    data = data.filter(function(data) {
         var correspondingThread = this.getThreadById(data.thread.id);
 
-        if (!correspondingThread) return;
+        if (!correspondingThread) return false;
 
         var newMessages = data.thread.messages.slice(correspondingThread.messages.length);
 
-        if (!newMessages.length) return;
+        if (!newMessages.length) return false;
 
         correspondingThread.messages.push(newMessages);
 
@@ -90,7 +90,11 @@ ChatRegime.prototype.onUpdate = function(err, data) {
             (this.activeChatBox ? this.activeChatBox.id != data.thread.id : true);
 
         correspondingThread.active = data.thread.id == this.activeThread.id;
+
+        return true;
     }, this);
+
+    if (!data.length) return this.setupUpdates_();
 
     this.dispatchEvent({
         type: this.EventType.NEW_MESSAGE,
