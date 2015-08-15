@@ -4,7 +4,6 @@ var Culture = goog.require('vieux.Culture');
 var MotherPaneRep = goog.require('vchat.MotherPaneRep');
 var ThreadListCulture = goog.require('vchat.ThreadListCulture');
 var CultureMinistry = goog.require('vieux.CultureMinistry');
-var ChatRegime = goog.require('vchat.ChatRegime');
 var ChatPaneCulture = goog.require('vchat.ChatPaneCulture');
 
 
@@ -42,7 +41,7 @@ MotherPaneCulture.prototype.onUpdate = function() {
 MotherPaneCulture.prototype.onClickThreadPreview = function(e) {
     var culture = CultureMinistry.get(e.target.id);
 
-    ChatRegime.setActive(culture.getThread());
+    this.rep.setActive(culture.getThread());
 };
 
 

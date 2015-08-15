@@ -23,6 +23,9 @@ MotherPaneRep.prototype.getThreads = function() {
     return ChatRegime.threads;
 };
 
+MotherPaneRep.prototype.setActive = function(thread) {
+    ChatRegime.setActive(thread);
+};
 
 MotherPaneRep.prototype.getActiveThread = function() {
     return ChatRegime.activeThread;
