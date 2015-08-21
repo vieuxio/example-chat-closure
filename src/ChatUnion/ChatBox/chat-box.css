@@ -112,6 +112,7 @@ chat-box minimize {
     display: inline-block;
     height: 100%;
     width: 17px;
+    cursor: pointer;
 }
 
 chat-box minimize::before {
