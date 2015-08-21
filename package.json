@@ -1,7 +1,7 @@
 {
-  "name": "vchat-tartjs",
+  "name": "vieux-example-chat-closure",
   "version": "0.0.1",
-  "description": "A vchat with tartJS",
+  "description": "An example chat application with Google Closure Tools",
   "main": "gulpfile.js",
   "dependencies": {
     "gulp": "^3.9.0",
@@ -27,16 +27,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tart/tartjs-vchat"
+    "url": "https://github.com/vieuxio/example-chat-closure"
   },
   "keywords": [
     "vchat",
     "mvc"
   ],
   "author": "Armagan Amcalar <armagan@amcalar.com>",
-  "license": "Apache License, Version 2.0",
+  "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/tart/tartjs-vchat/issues"
+    "url": "https://github.com/vieuxio/example-chat-closure/issues"
   },
-  "homepage": "https://github.com/tart/tartjs-vchat"
+  "homepage": "https://github.com/vieuxio/example-chat-closure"
 }
